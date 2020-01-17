@@ -1,13 +1,71 @@
-body {
+* {
+  box-sizing: border-box;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+body {
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+  background-color: hsl(0, 20%, 96%);
+  color: hsl(0, 20%, 20%);
+}
+
+img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+ul[class] {
+  list-style: none;
+  /* padding: 0; */
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem;
+}
+
+.site-title {
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+input {
+  margin-left: 0.5rem;
+  padding: 0.5rem;
+  font: inherit;
+  border: 2px solid transparent;
+  border-radius: 2px;
+  background-color: #fff;
+}
+
+input:focus {
+  border: 2px solid hotpink;
+}
+
+.initial {
+  margin-top: 4rem;
+  font-size: 1.5rem;
+  font-weight: 600;
+  line-height: 1;
+}
+
+.stack--sm > * + * {
+  margin-top: 0.75rem;
+}
+
+.stack > * + * {
+  margin-top: 1.5rem;
+}
+
+.stack--lg > * + * {
+  margin-top: 3rem;
+}
+
+main {
+  max-width: 40rem;
+  margin: 0 auto;
+  padding: 1.5rem;
 }
