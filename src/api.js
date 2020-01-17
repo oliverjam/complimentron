@@ -19,7 +19,7 @@ function get(url, data = []) {
 
 export function getRepos(username) {
   return get(
-    `https://api.github.com/users/${username}/repos?type=all&sort=updated&access_token=${token}`
+    `https://api.github.com/users/${username}/repos?type=all&sort=updated&per_page=100&access_token=${token}`
   );
   // type=all gets both repos you own and ones you're just a member of
 }
