@@ -9,7 +9,7 @@ function get(url) {
 
 export function getRepos(username) {
   return get(
-    `https://api.github.com/users/${username}/repos?type=all&access_token=${token}`
+    `https://api.github.com/users/${username}/repos?type=all&sort=updated&access_token=${token}`
   );
   // type=all gets both repos you own and ones you're just a member of
 }
@@ -44,6 +44,9 @@ export function getIssues(username, label) {
           return repo && repo.issues.length > 0;
         })
         .map(repo => {
+          if (repo.name === "dish") {
+            console.log(repo);
+          }
           const issues = repo.issues.map(issue => {
             return {
               title: issue.title,
