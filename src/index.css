@@ -27,7 +27,7 @@ ul[class] {
 
 header {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
   justify-content: space-between;
   grid-row-gap: 1rem;
   padding: 1.5rem;
@@ -46,7 +46,7 @@ header {
 
 form {
   display: grid;
-  grid-template-columns: auto 1fr;
+  grid-template-columns: auto 20ch;
   align-items: center;
   justify-items: end;
   grid-gap: 0.5rem;
@@ -114,4 +114,21 @@ main {
   max-width: 40rem;
   margin: 0 auto;
   padding: 1.5rem;
+}
+
+cite {
+  display: flex;
+  align-items: center;
+  margin-top: 1.5rem;
+  border-bottom: 1px solid;
+  padding-bottom: 1.5rem;
+  font-style: normal;
+  font-weight: 600;
+}
+
+cite img {
+  width: 4rem;
+  height: 4rem;
+  border-radius: 50%;
+  margin-right: 0.5rem;
 }
