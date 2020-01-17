@@ -9,6 +9,12 @@ body {
   color: hsl(0, 20%, 20%);
 }
 
+#root {
+  min-height: 100vh;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+}
+
 img {
   display: block;
   width: 100%;
@@ -131,4 +137,16 @@ cite img {
   height: 4rem;
   border-radius: 50%;
   margin-right: 0.5rem;
+}
+
+footer {
+  padding: 1.5rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+  justify-content: space-between;
+  grid-row-gap: 1rem;
+}
+
+footer > *:last-child {
+  justify-self: end;
 }

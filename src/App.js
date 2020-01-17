@@ -116,6 +116,19 @@ function App() {
           </ul>
         )}
       </main>
+      <footer>
+        <p>
+          Made with{" "}
+          <span role="img" aria-label="love">
+            ❤️
+          </span>{" "}
+          by <a href="https://oliverjam.es">@oliverjam</a>
+        </p>
+        <p>
+          View source{" "}
+          <a href="https://github.com/oliverjam/complimentron">on GitHub</a>
+        </p>
+      </footer>
     </>
   );
 }
