@@ -31,7 +31,6 @@ export function getIssuesUrls(repos) {
 
 function getIssuesForRepo(label) {
   return repo => {
-    if (!repo.open_issues_count) return;
     const url =
       repo.issues_url.replace("{/number}", "") +
       `?labels=${label}&access_token=${token}`;
@@ -54,9 +53,6 @@ export function getIssues(username, label) {
           return repo && repo.issues.length > 0;
         })
         .map(repo => {
-          if (repo.name === "dish") {
-            console.log(repo);
-          }
           const issues = repo.issues.map(issue => {
             return {
               title: issue.title,
