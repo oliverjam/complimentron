@@ -1,9 +1,19 @@
 const token = process.env.REACT_APP_GITHUB_TOKEN;
 
-function get(url) {
+function get(url, data = []) {
   return fetch(url, { headers: { Authorization: token } }).then(res => {
     if (!res.ok) throw new Error(res.status);
-    return res.json();
+    const link = res.headers.get("link");
+    return res.json().then(json => {
+      const newData = [...data, ...json];
+      const nextPage = link
+        ? link.match(/(?<=<)(.*?)(?=>; rel="next")/)
+        : false;
+      if (nextPage) {
+        return get(nextPage[0], newData);
+      }
+      return newData;
+    });
   });
 }
 
