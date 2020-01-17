@@ -15,25 +15,46 @@ img {
   height: auto;
 }
 
+h2,
+h3 {
+  text-transform: capitalize;
+}
+
 ul[class] {
   list-style: none;
   /* padding: 0; */
 }
 
 header {
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
   justify-content: space-between;
-  padding: 1rem;
+  grid-row-gap: 1rem;
+  padding: 1.5rem;
 }
 
 .site-title {
+  font-size: 1rem;
   font-weight: 900;
   text-transform: uppercase;
   letter-spacing: 1px;
 }
 
+.row {
+  display: block;
+}
+
+form {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: center;
+  justify-items: end;
+  grid-gap: 0.5rem;
+}
+
 input {
-  margin-left: 0.5rem;
+  display: block;
+  width: 100%;
   padding: 0.5rem;
   font: inherit;
   border: 2px solid transparent;
@@ -45,11 +66,36 @@ input:focus {
   border: 2px solid hotpink;
 }
 
-.initial {
+.big {
   margin-top: 4rem;
   font-size: 1.5rem;
   font-weight: 600;
   line-height: 1;
+}
+
+@keyframes spin {
+  to {
+    transform: scale(1.5);
+  }
+}
+
+.spin {
+  display: block;
+  width: max-content;
+  margin: 0 auto;
+  font-size: 6rem;
+  color: hsl(350, 60%, 60%);
+  animation: spin 1s infinite alternate;
+}
+
+.vh {
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  height: 1px;
+  overflow: hidden;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
 }
 
 .stack--sm > * + * {

@@ -19,21 +19,23 @@ export function getIssuesUrls(repos) {
   // GH urls have weird placeholders at the end?
 }
 
-export function getIssuesForRepo(repo) {
-  if (!repo.open_issues_count) return;
-  const url =
-    repo.issues_url.replace("{/number}", "") +
-    `?labels=compliment&access_token=${token}`;
-  return get(url).then(issues => {
-    return { name: repo.name, issues };
-  });
-  // GH urls have weird placeholders at the end?
+function getIssuesForRepo(label) {
+  return repo => {
+    if (!repo.open_issues_count) return;
+    const url =
+      repo.issues_url.replace("{/number}", "") +
+      `?labels=${label}&access_token=${token}`;
+    return get(url).then(issues => {
+      return { name: repo.name, issues };
+    });
+    // GH urls have weird placeholders at the end?
+  };
 }
 
-export function getIssues(username) {
+export function getIssues(username, label) {
   return getRepos(username)
     .then(repos => {
-      const issuePromises = repos.map(getIssuesForRepo);
+      const issuePromises = repos.map(getIssuesForRepo(label));
       return Promise.all(issuePromises);
     })
     .then(reposWithIssues => {
