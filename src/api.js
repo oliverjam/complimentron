@@ -47,7 +47,7 @@ function getIssuesForRepo(label) {
     const url =
       // GH urls have weird placeholders at the end?
       repo.issues_url.replace("{/number}", "") +
-      `?labels=${label}&access_token=${token}`;
+      `?state=all&labels=${label}&access_token=${token}`;
     return get(url).then(issues => {
       return { name: repo.name, issues };
     });
