@@ -1,16 +1,29 @@
 const token = process.env.REACT_APP_GITHUB_TOKEN;
 
+function parseLinkHeader(header) {
+  let parsed = {};
+  header
+    .replace("Link: ", "")
+    .split(",")
+    .forEach(line => {
+      const [linkString, relString] = line.split("; ");
+      const link = linkString.replace(/<|>/g, "").trim();
+      let [, rel] = relString.split("=");
+      rel = rel.replace(/"/g, "");
+      parsed[rel] = link;
+    });
+  return parsed;
+}
+
 function get(url, data = []) {
   return fetch(url, { headers: { Authorization: token } }).then(res => {
     if (!res.ok) throw new Error(res.status);
     const link = res.headers.get("link");
     return res.json().then(json => {
       const newData = [...data, ...json];
-      const nextPage = link
-        ? link.match(/(?<=<)(.*?)(?=>; rel="next")/)
-        : false;
+      const nextPage = link ? parseLinkHeader(link).next : false;
       if (nextPage) {
-        return get(nextPage[0], newData);
+        return get(nextPage, newData);
       }
       return newData;
     });
@@ -32,12 +45,12 @@ export function getIssuesUrls(repos) {
 function getIssuesForRepo(label) {
   return repo => {
     const url =
+      // GH urls have weird placeholders at the end?
       repo.issues_url.replace("{/number}", "") +
       `?labels=${label}&access_token=${token}`;
     return get(url).then(issues => {
       return { name: repo.name, issues };
     });
-    // GH urls have weird placeholders at the end?
   };
 }
 
