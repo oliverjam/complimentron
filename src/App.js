@@ -2,8 +2,25 @@ import React from "react";
 import md from "snarkdown";
 import { getIssues } from "./api";
 
+function updateState(state, event) {
+  switch (event.type) {
+    case "SUBMIT":
+      return { ...state, status: "loading" };
+    case "SUCCESS":
+      return { ...state, status: "success", repos: event.repos };
+    case "ERROR":
+      return { ...state, status: "error", error: event.message };
+    default:
+      return {
+        ...state,
+        status: "error",
+        error: `No state update matching ${event.type}`
+      };
+  }
+}
+
 function App() {
-  const [data, setData] = React.useState({
+  const [state, dispatch] = React.useReducer(updateState, {
     status: "initial",
     repos: [],
     error: ""
@@ -11,32 +28,30 @@ function App() {
 
   function handleSubmit(event) {
     event.preventDefault();
-    setData({ status: "loading", repos: [] });
+    dispatch({ type: "SUBMIT" });
     const username = event.target.elements.username.value;
     const label = event.target.elements.label.value;
 
     getIssues(username, label)
       .then(repos => {
         if (!repos.length) {
-          setData({
-            status: "error",
-            error: "No matching issues found, sorry",
-            repos: []
+          dispatch({
+            type: "ERROR",
+            message: "No matching issues found, sorry"
           });
         } else {
-          setData({ status: "success", repos });
+          dispatch({ type: "SUCCESS", repos });
         }
       })
       .catch(error => {
-        setData({
-          status: "error",
-          error: "We had a problem talking to Github, sorry",
-          repos: []
+        dispatch({
+          type: "ERROR",
+          message: "We had a problem talking to Github, sorry"
         });
       });
   }
 
-  const { status, repos, error } = data;
+  const { status, repos, error } = state;
   return (
     <>
       <header>
