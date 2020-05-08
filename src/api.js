@@ -16,23 +16,25 @@ function parseLinkHeader(header) {
 }
 
 function get(url, data = []) {
-  return fetch(url, { headers: { Authorization: token } }).then(res => {
-    if (!res.ok) throw new Error(res.status);
-    const link = res.headers.get("link");
-    return res.json().then(json => {
-      const newData = [...data, ...json];
-      const nextPage = link ? parseLinkHeader(link).next : false;
-      if (nextPage) {
-        return get(nextPage, newData);
-      }
-      return newData;
-    });
-  });
+  return fetch(url, { headers: { Authorization: `token ${token}` } }).then(
+    res => {
+      if (!res.ok) throw new Error(res.status);
+      const link = res.headers.get("link");
+      return res.json().then(json => {
+        const newData = [...data, ...json];
+        const nextPage = link ? parseLinkHeader(link).next : false;
+        if (nextPage) {
+          return get(nextPage, newData);
+        }
+        return newData;
+      });
+    }
+  );
 }
 
 export function getRepos(username) {
   return get(
-    `https://api.github.com/users/${username}/repos?type=all&sort=updated&per_page=100&access_token=${token}`
+    `https://api.github.com/users/${username}/repos?type=all&sort=updated&per_page=100`
   );
   // type=all gets both repos you own and ones you're just a member of
 }
